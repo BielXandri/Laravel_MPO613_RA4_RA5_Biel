@@ -28,8 +28,22 @@ Route::middleware('year')->group(function() {
         Route::get('filmsByYear/{year?}',[FilmController::class, "listFilmsByYear"])->name('filmsByYear');
         Route::get('filmsByGenre/{genre?}',[FilmController::class, "listFilmsByGenre"])->name('filmsByGenre');
         Route::get('sortFilms', [FilmController::class, "sortFilmsByYear"])->name('sortFilms');
-        Route::get('count', [FilmController::class, "countFilms"])->name('countFilms');
+        
+        // Esta es la ruta para mostrar la página (GET)
+        Route::get('count', [FilmController::class, "countFilms"])->name('countFilmsForm');
+        
+        // Esta es la ruta que recibe el formulario (POST)
+        Route::post('count', [FilmController::class, "countFilms"])->name('countFilms');
     });
 });
 
+//Ruta balidar URL
+Route::middleware(['validate.url'])->group(function () {
+    Route::get('/filmout/oldFilms', [FilmController::class, 'oldFilms']);
+    Route::get('/filmout/newFilms', [FilmController::class, 'newFilms']);
+});
 
+Route::prefix('filmin')->group(function () {
+    Route::post('/add-film', [FilmController::class, 'createFilm'])
+        ->name('filmin.addFilm');
+});

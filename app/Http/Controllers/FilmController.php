@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+
 
 class FilmController extends Controller
 {
@@ -10,8 +12,11 @@ class FilmController extends Controller
      * Read films from storage
      */
     public static function readFilms(): array {
-        $films = Storage::json('/public/films.json');
-        return $films;
+        if (!Storage::disk('public')->exists('films.json')) {
+            return [];
+        }
+        $json = Storage::disk('public')->get('films.json');
+        return json_decode($json, true) ?? [];
     }
     /**
      * List films older than input year 
@@ -128,5 +133,54 @@ public function countFilms() {
 
     return view('films.count', ['count' => $count, 'title' => $title]);
 }
+
+//Codigo  Crear pelicula y validar
+    public function isFilm($name): bool
+    {
+        $films = self::readFilms();
+        foreach ($films as $film) {
+            if (strtolower($film['name']) === strtolower($name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function listFilms()
+    {
+        $films = self::readFilms();
+        $title = "Listado de todas las películas";
+        return view("films.list", ["films" => $films, "title" => $title]);
+    }
+
+    public function createFilm(Request $request)
+    {
+        $newFilm = $request->validate([
+            'name'     => 'required|string',
+            'year'     => 'required|integer|min:1888',
+            'genre'    => 'required|string',
+            'country'  => 'required|string',
+            'duration' => 'required|integer|min:1',
+            'img_url'  => 'required|string',
+        ]);
+
+        $films = self::readFilms();
+
+        foreach ($films as $film) {
+            if (strtolower($film['name']) === strtolower($newFilm['name'])) {
+                return redirect('/')
+                    ->with('error', "La película '" . $newFilm['name'] . "' ya existe.")
+                    ->withInput();
+            }
+        }
+
+        $films[] = $newFilm;
+
+        Storage::disk('public')->put('films.json', json_encode($films, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+        return redirect('/')->with('success', 'Película añadida correctamente.');
+    }
+
+
 
 }
