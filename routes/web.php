@@ -43,6 +43,10 @@ Route::middleware(['validate.url'])->group(function () {
     Route::get('/filmout/newFilms', [FilmController::class, 'newFilms']);
 });
 
+Route::prefix('actorout')->group(function () {
+    Route::get('actors', [\App\Http\Controllers\ActorController::class, 'listActors'])->name('actors');
+});
+
 Route::prefix('filmin')->group(function () {
     Route::post('/add-film', [FilmController::class, 'createFilm'])
         ->name('filmin.addFilm');

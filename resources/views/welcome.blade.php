@@ -19,6 +19,11 @@
         <li><a href="/filmout/count">Pelis contadas</a></li>
     </ul>
 
+    <h2 class="mt-4">Lista de Actores</h2>
+    <ul>
+        <li><a href="{{ route('actors') }}">Listado de Actores</a></li>
+    </ul>
+
     <h2 class="mb-4">Añadir Película</h2>   
     
     <form action="{{ route('filmin.addFilm') }}" method="post">
@@ -41,8 +46,8 @@
 
         <div class="row">
             <div class="col-md-6 mb-3">
-                <label for="genre" class="form-label">Género</label>
-                <input type="text" class="form-control" id="genre" name="genre" value="{{ old('genre') }}" required>
+                <label for="genere" class="form-label">Género</label>
+                <input type="text" class="form-control" id="genere" name="genere" value="{{ old('genere') }}" required>
             </div>
             <div class="col-md-6 mb-3">
                 <label for="country" class="form-label">País</label>
