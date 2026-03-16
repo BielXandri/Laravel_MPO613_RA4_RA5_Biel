@@ -7,21 +7,21 @@ class FilmActorSeeder extends Seeder
 {
     public function run(): void
     {
-
+        DB::table('film_actor')->truncate();
+       
         $filmIds = DB::table('films')->pluck('id')->toArray();
         $actorIds = DB::table('actors')->pluck('id')->toArray();
-
-        foreach ($filmIds as $fId) {
-            $numActors = rand(1, 3);
-            shuffle($actorIds);
-            $selectedActors = array_slice($actorIds, 0, $numActors);
-
-            foreach ($selectedActors as $aId) {
-                DB::table('films_actor')->insert([
-                    'film_id'    => $fId,
-                    'actor_id'   => $aId,
+ 
+        foreach ($filmIds as $filmId) {
+ 
+            $randomActors = collect($actorIds)->random(rand(1, 4));
+ 
+            foreach ($randomActors as $actorId) {
+                DB::table('film_actor')->insert([
+                    'film_id' => $filmId,
+                    'actor_id' => $actorId,
                     'created_at' => now(),
-                    'updated_at' => now()
+                    'updated_at' => now(),
                 ]);
             }
         }
