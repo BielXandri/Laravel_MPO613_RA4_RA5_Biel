@@ -22,6 +22,7 @@
     <h2 class="mt-4">Lista de Actores</h2>
     <ul>
         <li><a href="{{ route('actors') }}">Listado de Actores</a></li>
+        <li><a href="{{ route('actorsByDecade') }}">Listado de Actores por decada</a></li>
     </ul>
 
     <h2 class="mb-4">Añadir Película</h2>   
