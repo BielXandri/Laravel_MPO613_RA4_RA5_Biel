@@ -45,6 +45,7 @@ Route::middleware(['validate.url'])->group(function () {
 
 Route::prefix('actorout')->group(function () {
     Route::get('actors', [\App\Http\Controllers\ActorController::class, 'listActors'])->name('actors');
+    Route::get('actorsByDecade', [\App\Http\Controllers\ActorController::class, 'listActorsByDecade'])->name('actorsByDecade');
 });
 
 Route::prefix('filmin')->group(function () {
