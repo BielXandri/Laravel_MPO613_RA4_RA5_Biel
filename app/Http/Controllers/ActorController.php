@@ -20,6 +20,16 @@ class ActorController extends Controller
     }
 
     /**
+     * Cuenta el número total de actores.
+     */
+    public function countActors(Request $request) {
+        $count = Actor::count();
+        $title = "Contador de Actores";
+
+        return view('actors.count', ['count' => $count, 'title' => $title]);
+    }
+
+    /**
      * List actors born in a specific decade.
      */
     public function listActorsByDecade(Request $request)

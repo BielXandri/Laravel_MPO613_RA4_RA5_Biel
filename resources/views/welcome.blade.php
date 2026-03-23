@@ -23,6 +23,7 @@
     <ul>
         <li><a href="{{ route('actors') }}">Listado de Actores</a></li>
         <li><a href="{{ route('actorsByDecade') }}">Listado de Actores por decada</a></li>
+        <li><a href="{{ route('countActorsForm') }}">Contar Actores</a></li>
     </ul>
 
     <h2 class="mb-4">Añadir Película</h2>   
