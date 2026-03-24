@@ -54,4 +54,49 @@ class ActorController extends Controller
             "selected_decade" => $decade
         ]);
     }
+
+    /**
+     * API: List all actors.
+     */
+    public function index()
+    {
+        $actors = Actor::all();
+        return response()->json($actors);
+    }
+
+    /**
+     * API: List actors by decade.
+     */
+    public function actorsByDecade($year)
+    {
+        $start_year = $year;
+        $end_year = $year + 9;
+        
+        $actors = Actor::whereYear('birthdate', '>=', $start_year)
+                       ->whereYear('birthdate', '<=', $end_year)
+                       ->get();
+        return response()->json($actors);
+    }
+
+    /**
+     * API: Count actors.
+     */
+    public function countActorsApi()
+    {
+        $count = Actor::count();
+        return response()->json(['count' => $count]);
+    }
+
+    /**
+     * API: Delete actor by id.
+     */
+    public function destroy($id)
+    {
+        $actor = Actor::find($id);
+        if ($actor) {
+            $actor->delete();
+            return response()->json(['message' => 'Actor deleted successfully']);
+        }
+        return response()->json(['message' => 'Actor not found'], 404);
+    }
 }
