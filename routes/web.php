@@ -48,7 +48,8 @@ Route::prefix('actorout')->group(function () {
     Route::get('actorsByDecade', [\App\Http\Controllers\ActorController::class, 'listActorsByDecade'])->name('actorsByDecade');
     Route::get('count', [\App\Http\Controllers\ActorController::class, 'countActors'])->name('countActorsForm');
     Route::post('count', [\App\Http\Controllers\ActorController::class, 'countActors'])->name('countActors');
-
+    Route::get('delete', [\App\Http\Controllers\ActorController::class, 'deleteActors'])->name('deleteActorsForm');
+    Route::post('delete', [\App\Http\Controllers\ActorController::class, 'deleteActors'])->name('deleteActors');
 });
 
 Route::prefix('filmin')->group(function () {

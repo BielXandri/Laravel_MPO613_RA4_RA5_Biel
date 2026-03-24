@@ -115,4 +115,13 @@ class FilmController extends Controller
 
         return redirect('/')->with('success', 'Película añadida correctamente.');
     }
+
+    /**
+     * API: List all films.
+     */
+    public function index()
+    {
+        $films = Film::all();
+        return response()->json($films);
+    }
 }
