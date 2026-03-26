@@ -117,11 +117,13 @@ class FilmController extends Controller
     }
 
     /**
-     * API: List all films.
+     * API: List all films with their actors.
      */
     public function index()
     {
-        $films = Film::all();
-        return response()->json($films);
+        // Eager loading actors to improve performance and include them in the response
+        $films = Film::with('actors')->get();
+
+        return response()->json($films, 200, [], JSON_PRETTY_PRINT);
     }
 }
